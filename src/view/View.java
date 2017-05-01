@@ -14,6 +14,9 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.swing.JOptionPane;
 import models.Berkas_Lamaran;
 import java.util.*;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,16 +28,18 @@ public class View extends javax.swing.JFrame {
     /**
      * Creates new form AplicationGUIPelamar
      */
-    Database db = new Database();
+    Database db;
     PelamarController PelamarControl;
+    PerusahaanController PerusahaanControl;
+    LowonganController LowonganControl;
 //    PelamarController clPelamar = new PelamarController();
 
     public View() {
         initComponents();
-        PelamarControl.show_pelamarlist_in_table();
-        show_perusahaanlist_in_table();
-        PelamarControl.show_pelamarlist_in_berkas();
-        show_perusahaanlist_in_lowongan();
+//        PelamarControl.show_pelamarlist_in_table();
+//        show_perusahaanlist_in_table();
+//        PelamarControl.show_pelamarlist_in_berkas();
+//        show_perusahaanlist_in_lowongan();
     }
 
     /**
@@ -612,148 +617,43 @@ public class View extends javax.swing.JFrame {
 
     private void btnInsertPelamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertPelamarActionPerformed
         // TODO add your handling code here:
-        if (checkInputPelamar()) {
-            try {
-                Connection con = db.getConnection();
-                PreparedStatement ps = con.prepareStatement("INSERT INTO Pelamar(Nama, Alamat, Email, Nohp) values (?,?,?,?)");
-                ps.setString(1, txtNamaPelamar.getText());
-                ps.setString(2, txtAlamatPelamar.getText());
-                ps.setString(3, txtEmailPelamar.getText());
-                ps.setString(4, txtNohpPelamar.getText());
-                ps.executeUpdate();
-
-                PelamarControl.show_pelamarlist_in_table();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "One or More fields are Empty!");
-        }
     }//GEN-LAST:event_btnInsertPelamarActionPerformed
 
     private void btnUpdatePelamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePelamarActionPerformed
         // TODO add your handling code here:
-        if (checkInputPelamar() && checkIdInputPelamar()) {
-            String UpdateQuery = null;
-            PreparedStatement ps = null;
-            Connection con = db.getConnection();
-
-            UpdateQuery = "UPDATE pelamar SET nama = ?, alamat = ?, email = ?, nohp = ? where id = ?";
-            try {
-                ps = con.prepareStatement(UpdateQuery);
-
-                ps.setString(1, txtNamaPelamar.getText());
-                ps.setString(2, txtAlamatPelamar.getText());
-                ps.setString(3, txtEmailPelamar.getText());
-                ps.setString(4, txtNohpPelamar.getText());
-                ps.setInt(6, Integer.parseInt(txtIdPelamar.getText()));
-
-                ps.executeUpdate();
-
-                PelamarControl.show_pelamarlist_in_table();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Please fill in all of the fields");
-        }
+        
     }//GEN-LAST:event_btnUpdatePelamarActionPerformed
 
     private void btnDeletePelamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePelamarActionPerformed
         // TODO add your handling code here:
-        if (checkIdInputPelamar()) {
-            try {
-                Connection con = db.getConnection();
-                String DeleteQuery = "DELETE FROM Pelamar where id = ?";
-                PreparedStatement ps = null;
-                ps = con.prepareStatement(DeleteQuery);
-
-                ps.setInt(1, Integer.parseInt(txtIdPelamar.getText()));
-                ps.executeUpdate();
-
-                PelamarControl.show_pelamarlist_in_table();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Pelamar id: " + txtIdPelamar.getText() + " not deleted");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Please input the Pelamar id");
-        }
+        
     }//GEN-LAST:event_btnDeletePelamarActionPerformed
 
     private void tablePelamarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePelamarMouseClicked
         // TODO add your handling code here:
         int index = tablePelamar.getSelectedRow();
-        showEachPelamar(index);
+        PelamarControl.showEachPelamar(index);
     }//GEN-LAST:event_tablePelamarMouseClicked
+
+    
 
     private void btnInsertPerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertPerusahaanActionPerformed
         // TODO add your handling code here:
-        if (checkInputPerusahaan()) {
-            try {
-                Connection con = db.getConnection();
-                PreparedStatement ps = con.prepareStatement("INSERT INTO Perusahaan(Nama, Lokasi) values (?,?)");
-                ps.setString(1, txtNamaPerusahaan.getText());
-                ps.setString(2, txtLokasiPerusahaan.getText());
-                ps.executeUpdate();
-
-                show_perusahaanlist_in_table();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "One or More fields are Empty!");
-        }
+        
     }//GEN-LAST:event_btnInsertPerusahaanActionPerformed
 
     private void tablePerusahaanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePerusahaanMouseClicked
         // TODO add your handling code here:
         int index = tablePerusahaan.getSelectedRow();
-        showEachPerusahaan(index);
+        PerusahaanControl.showEachPerusahaan(index);
     }//GEN-LAST:event_tablePerusahaanMouseClicked
 
     private void btnUpdatePerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePerusahaanActionPerformed
-        if (checkInputPerusahaan() && checkIdInputPerusahaan()) {
-            String UpdateQuery = null;
-            PreparedStatement ps = null;
-            Connection con = db.getConnection();
-
-            UpdateQuery = "UPDATE Perusahaan SET nama = ?, lokasi = ? where id = ?";
-            try {
-                ps = con.prepareStatement(UpdateQuery);
-
-                ps.setString(1, txtNamaPerusahaan.getText());
-                ps.setString(2, txtLokasiPerusahaan.getText());
-                ps.setInt(3, Integer.parseInt(txtIdPerusahaan.getText()));
-
-                ps.executeUpdate();
-
-                show_perusahaanlist_in_table();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Please fill in all of the fields");
-        }
+        
     }//GEN-LAST:event_btnUpdatePerusahaanActionPerformed
 
     private void btnDeletePerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePerusahaanActionPerformed
-        if (checkIdInputPerusahaan()) {
-            try {
-                Connection con = db.getConnection();
-                String DeleteQuery = "DELETE FROM Perusahaan where id = ?";
-                PreparedStatement ps = null;
-                ps = con.prepareStatement(DeleteQuery);
-
-                ps.setInt(1, Integer.parseInt(txtIdPerusahaan.getText()));
-                ps.executeUpdate();
-
-                show_perusahaanlist_in_table();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Perusahaan id: " + txtIdPerusahaan.getText() + " not deleted");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Please input the Perusahaan id");
-        }
+        
     }//GEN-LAST:event_btnDeletePerusahaanActionPerformed
 
     private void tablePelamarOnBerkasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePelamarOnBerkasMouseClicked
@@ -778,7 +678,7 @@ public class View extends javax.swing.JFrame {
             }
             perusahaan = new Perusahaan(rs.getString("id"), rs.getString("nama"), rs.getString("lokasi"));
 //            perusahaan = (Perusahaan) rs.getObject(index);
-            show_lowonganlist(perusahaan);
+            LowonganControl.show_lowonganlist(perusahaan);
         } catch (SQLException ex) {
             Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -788,8 +688,8 @@ public class View extends javax.swing.JFrame {
 
     private void pnlRegisterBerkasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlRegisterBerkasMouseClicked
         // TODO add your handling code here:
-        show_perusahaanlist_in_lowongan();
-        show_perusahaanlist_in_table();
+        PerusahaanControl.show_perusahaanlist_in_lowongan();
+        PerusahaanControl.show_perusahaanlist_in_table();
         PelamarControl.show_pelamarlist_in_berkas();
         PelamarControl.show_pelamarlist_in_table();
     }//GEN-LAST:event_pnlRegisterBerkasMouseClicked
@@ -803,22 +703,7 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateLowonganActionPerformed
 
     private void btnInsertLowonganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertLowonganActionPerformed
-        if (checkInputLowongan()) {
-            try {
-                Connection con = db.getConnection();
-                PreparedStatement ps = con.prepareStatement("INSERT INTO Lowongan(Nama, jumlah_lowongan, idperusahaan) values (?,?,?)");
-                ps.setString(1, txtNamaLowongan.getText());
-                ps.setString(2, txtJumlahLowongan.getText());
-                ps.setString(3, txtIdPerusahaanLowongan.getText());
-                ps.executeUpdate();
-
-                show_perusahaanlist_in_table();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Perusahaan tidak ditemukan!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "One or More fields are Empty!");
-        }
+        
     }//GEN-LAST:event_btnInsertLowonganActionPerformed
 
     private void tableLowonganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableLowonganMouseClicked
@@ -930,133 +815,171 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JTextField txtNohpPelamar;
     // End of variables declaration//GEN-END:variables
 
-    public boolean checkInputPelamar() {
-        return !("".equals(txtNamaPelamar.getText())
-                || "".equals(txtAlamatPelamar.getText())
-                || "".equals(txtEmailPelamar.getText())
-                || "".equals(txtNohpPelamar.getText()));
+    
+//    ---------------------------------------------------------
+    
+    public JTable getTableLowongan(){
+        return tableLowongan;
+    }
+    public JTable getTablePelamar(){
+        return tablePelamar;
+    }
+    public JTable getTablePelamarOnBerkas(){
+        return tablePelamarOnBerkas;
+    }
+    
+    public JTable getTablePerusahaan() {
+        return tablePerusahaan;
     }
 
-    public boolean checkIdInputPelamar() {
-        return !"".equals(txtIdPelamar.getText());
+    public JTable getTablePerusahaanOnLowongan() {
+        return tablePerusahaanOnLowongan;
     }
 
-    public void showEachPelamar(int index) {
-        txtIdPelamar.setText(Integer.toString(PelamarControl.getPelamarList().get(index).getId()));
-        txtNamaPelamar.setText(PelamarControl.getPelamarList().get(index).getNama());
-        txtAlamatPelamar.setText(PelamarControl.getPelamarList().get(index).getAlamat());
-        txtEmailPelamar.setText(PelamarControl.getPelamarList().get(index).getEmail());
-        txtNohpPelamar.setText(PelamarControl.getPelamarList().get(index).getNo_hp());
+    public JButton getBtnInsertLowongan() {
+        return btnInsertLowongan;
     }
 
-//    ------------------END PELAMAR --------------------
-    private boolean checkInputPerusahaan() {
-        return !("".equals(txtNamaPerusahaan.getText()) || "".equals(txtLokasiPerusahaan.getText()));
+    public JButton getBtnInsertPelamar() {
+        return btnInsertPelamar;
     }
 
-    public boolean checkIdInputPerusahaan() {
-        return !"".equals(txtIdPerusahaan.getText());
+    public JButton getBtnInsertPerusahaan() {
+        return btnInsertPerusahaan;
     }
 
-    public ArrayList<Perusahaan> getPerusahaanList() {
-
-        ArrayList<Perusahaan> perusahaanList = new ArrayList<>();
-        Connection con = db.getConnection();
-        String query = "SELECT * from Perusahaan";
-
-        Statement st;
-        ResultSet rs;
-        try {
-
-            st = con.createStatement();
-            rs = st.executeQuery(query);
-            Perusahaan perusahaan;
-
-            while (rs.next()) {
-                perusahaan = new Perusahaan(rs.getString("id"), rs.getString("nama"), rs.getString("lokasi"));
-                perusahaanList.add(perusahaan);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return perusahaanList;
+    public JButton getBtnUpdateLowongan() {
+        return btnUpdateLowongan;
     }
 
-    public void show_perusahaanlist_in_table() {
+    public JButton getBtnUpdatePelamar() {
+        return btnUpdatePelamar;
     }
 
-    public void showEachPerusahaan(int index) {
-        txtIdPerusahaan.setText(Integer.toString(getPerusahaanList().get(index).getId()));
-        txtNamaPerusahaan.setText(getPerusahaanList().get(index).getNama());
-        txtLokasiPerusahaan.setText(getPerusahaanList().get(index).getLokasi());
+    public JButton getBtnUpdatePerusahaan() {
+        return btnUpdatePerusahaan;
     }
 
-//    ------------- END BERKAS ----------------------------
-    public void show_perusahaanlist_in_lowongan() {
-        ArrayList<Perusahaan> list = getPerusahaanList();
-        DefaultTableModel model = (DefaultTableModel) tablePerusahaanOnLowongan.getModel();
-
-//        CLEAR TABLE
-        model.setRowCount(0);
-
-        Object[] row = new Object[2];
-        for (int i = 0; i < list.size(); i++) {
-            row[0] = list.get(i).getId();
-            row[1] = list.get(i).getNama();
-
-            model.addRow(row);
-        }
+    public JButton getBtnDeleteLowongan() {
+        return btnDeleteLowongan;
     }
 
-    public boolean checkInputLowongan() {
-        return !("".equals(txtNamaLowongan.getText()) || "".equals(txtJumlahLowongan.getText()) || "".equals(txtIdPerusahaanLowongan.getText()));
+    public JButton getBtnDeletePelamar() {
+        return btnDeletePelamar;
     }
 
-    public boolean checkIdInputLowongan() {
-        return !"".equals(txtIdLowongan.getText());
+    public JButton getBtnDeletePerusahaan() {
+        return btnDeletePerusahaan;
     }
 
-    public void show_lowonganlist(Perusahaan perusahaan) {
-        ArrayList<Lowongan> list = getLowonganList(perusahaan);
-        DefaultTableModel model = (DefaultTableModel) tableLowongan.getModel();
-
-//        CLEAR TABLE
-        model.setRowCount(0);
-//        JOptionPane.showMessageDialog(null, list.size());
-        Object[] row = new Object[4];
-        for (int i = 0; i < list.size(); i++) {
-            row[0] = list.get(i).getId();
-            row[1] = list.get(i).getNama();
-            row[2] = list.get(i).getJumlahLowongan();
-            row[3] = list.get(i).getIdPerusahaan();
-
-            model.addRow(row);
-        }
+    public JTextField getTxtAlamatPelamar() {
+        return txtAlamatPelamar;
     }
 
-    public ArrayList<Lowongan> getLowonganList(Perusahaan perusahaan) {
-//            ArrayList<Lowongan> lowonganList = new ArrayList<>();
-        ArrayList<Lowongan> lowonganList = perusahaan.getDaftarLowongan();
-        Connection con = db.getConnection();
-        String query = "SELECT * from Lowongan where idPerusahaan = " + perusahaan.getId();
-//            JOptionPane.showMessageDialog(null, query);
-        Statement st;
-        ResultSet rs;
-        try {
-
-            st = con.createStatement();
-            rs = st.executeQuery(query);
-            Lowongan lowongan;
-
-            while (rs.next()) {
-                lowongan = new Lowongan(rs.getString("id"), rs.getString("nama"), rs.getInt("jumlah_lowongan"), rs.getString("idperusahaan"));
-                lowonganList.add(lowongan);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return lowonganList;
+    public JTextField getTxtEmailPelamar() {
+        return txtEmailPelamar;
     }
+
+    public JTextField getTxtIdLowongan() {
+        return txtIdLowongan;
+    }
+
+    public JTextField getTxtIdPelamar() {
+        return txtIdPelamar;
+    }
+
+    public JTextField getTxtIdPerusahaan() {
+        return txtIdPerusahaan;
+    }
+
+    public JTextField getTxtIdPerusahaanLowongan() {
+        return txtIdPerusahaanLowongan;
+    }
+
+    public JTextField getTxtJumlahLowongan() {
+        return txtJumlahLowongan;
+    }
+
+    public JTextField getTxtLokasiPerusahaan() {
+        return txtLokasiPerusahaan;
+    }
+
+    public JTextField getTxtNamaLowongan() {
+        return txtNamaLowongan;
+    }
+
+    public JTextField getTxtNamaPelamar() {
+        return txtNamaPelamar;
+    }
+
+    public JTextField getTxtNamaPerusahaan() {
+        return txtNamaPerusahaan;
+    }
+
+    public JTextField getTxtNohpPelamar() {
+        return txtNohpPelamar;
+    }   
+    
+//    ---------------------------------------------------------
+
+    public void setTxtAlamatPelamar(String txtAlamatPelamar) {
+        this.txtAlamatPelamar.setText(txtAlamatPelamar);
+    }
+
+    public void setTxtEmailPelamar(String txtEmailPelamar) {
+        this.txtEmailPelamar.setText(txtEmailPelamar);
+    }
+
+    public void setTxtIdLowongan(String txtIdLowongan) {
+        this.txtIdLowongan.setText(txtIdLowongan);
+    }
+
+    public void setTxtIdPelamar(String txtIdPelamar) {
+        this.txtIdPelamar.setText(txtIdPelamar);
+    }
+
+    public void setTxtIdPerusahaan(String txtIdPerusahaan) {
+        this.txtIdPerusahaan.setText(txtIdPerusahaan);
+    }
+
+    public void setTxtIdPerusahaanLowongan(String txtIdPerusahaanLowongan) {
+        this.txtIdPerusahaanLowongan.setText(txtIdPerusahaanLowongan);
+    }
+
+    public void setTxtJumlahLowongan(String txtJumlahLowongan) {
+        this.txtJumlahLowongan.setText(txtJumlahLowongan);
+    }
+
+    public void setTxtLokasiPerusahaan(String txtLokasiPerusahaan) {
+        this.txtLokasiPerusahaan.setText(txtLokasiPerusahaan);
+    }
+
+    public void setTxtNamaLowongan(String txtNamaLowongan) {
+        this.txtNamaLowongan.setText(txtNamaLowongan);
+    }
+
+    public void setTxtNamaPelamar(String txtNamaPelamar) {
+        this.txtNamaPelamar.setText(txtNamaPelamar);
+    }
+
+    public void setTxtNamaPerusahaan(String txtNamaPerusahaan) {
+        this.txtNamaPerusahaan.setText(txtNamaPerusahaan);
+    }
+
+    public void setTxtNohpPelamar(String txtNohpPelamar) {
+        this.txtNohpPelamar.setText(txtNohpPelamar);
+    }
+
+    void addActionListener(ActionListener a) {
+      btnDeleteLowongan.addActionListener(a);
+      btnDeletePelamar.addActionListener(a);
+      btnDeletePerusahaan.addActionListener(a);
+      btnInsertLowongan.addActionListener(a);
+      btnInsertPelamar.addActionListener(a);
+      btnInsertPerusahaan.addActionListener(a);
+      btnUpdateLowongan.addActionListener(a);
+      btnUpdatePelamar.addActionListener(a);
+      btnUpdatePerusahaan.addActionListener(a);
+    }
+    
 }

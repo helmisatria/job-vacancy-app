@@ -17,7 +17,7 @@ public class Aplikasi {
     
     public Aplikasi(){
         db = new Database();
-//        db.connect();
+        db.getConnection();
     }
     
 

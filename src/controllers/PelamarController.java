@@ -7,12 +7,14 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Database;
 import models.Pelamar;
@@ -25,7 +27,28 @@ import view.View;
 public class PelamarController implements ActionListener{
 
     Database db;
-    View view = new View(); 
+    View view; 
+    
+    public boolean checkInputPelamar() {
+        return !("".equals(view.getTxtNamaPelamar().getText())
+                || "".equals(view.getTxtAlamatPelamar().getText())
+                || "".equals(view.getTxtEmailPelamar().getText())
+                || "".equals(view.getTxtNohpPelamar().getText()));
+    }
+
+    public boolean checkIdInputPelamar() {
+        return !"".equals(view.getTxtIdPelamar().getText());
+    }
+    
+    public void showEachPelamar(int index) {
+        
+        view.setTxtIdPelamar(Integer.toString(getPelamarList().get(index).getId()));
+        view.setTxtNamaPelamar(getPelamarList().get(index).getNama());
+        view.setTxtAlamatPelamar(getPelamarList().get(index).getAlamat());
+        view.setTxtEmailPelamar(getPelamarList().get(index).getEmail());
+        view.setTxtNohpPelamar(getPelamarList().get(index).getNo_hp());
+    }
+    
     public ArrayList<Pelamar> getPelamarList(){
         
             ArrayList<Pelamar> pelamarList = new ArrayList<>();
@@ -53,7 +76,7 @@ public class PelamarController implements ActionListener{
     
     public void show_pelamarlist_in_table(){
         ArrayList<Pelamar> list = getPelamarList();
-        DefaultTableModel model = (DefaultTableModel) tablePelamar.getModel();
+        DefaultTableModel model = (DefaultTableModel) view.getTablePelamar().getModel();
         
 //        CLEAR TABLE
         model.setRowCount(0);
@@ -71,7 +94,7 @@ public class PelamarController implements ActionListener{
     }
     public void show_pelamarlist_in_berkas(){
         ArrayList<Pelamar> list = getPelamarList();
-        DefaultTableModel model = (DefaultTableModel) tablePelamarOnBerkas.getModel();
+        DefaultTableModel model = (DefaultTableModel) view.getTablePelamarOnBerkas().getModel();
         
 //        CLEAR TABLE
         model.setRowCount(0);
@@ -86,7 +109,71 @@ public class PelamarController implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
         
+        if (source == view.getBtnInsertPelamar()){
+            if (checkInputPelamar()) {
+                try {
+                    Connection con = db.getConnection();
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO Pelamar(Nama, Alamat, Email, Nohp) values (?,?,?,?)");
+                    ps.setString(1, view.getTxtNamaPelamar().getText());
+                    ps.setString(2, view.getTxtAlamatPelamar().getText());
+                    ps.setString(3, view.getTxtEmailPelamar().getText());
+                    ps.setString(4, view.getTxtNohpPelamar().getText());
+                    ps.executeUpdate();
+
+                    show_pelamarlist_in_table();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "One or More fields are Empty!");
+            }
+        } else if (source == view.getBtnUpdatePelamar()){
+            
+            if (checkInputPelamar() && checkIdInputPelamar()) {
+                String UpdateQuery = null;
+                PreparedStatement ps = null;
+                Connection con = db.getConnection();
+
+                UpdateQuery = "UPDATE pelamar SET nama = ?, alamat = ?, email = ?, nohp = ? where id = ?";
+                try {
+                    ps = con.prepareStatement(UpdateQuery);
+
+                    ps.setString(1, view.getTxtNamaPelamar().getText());
+                    ps.setString(2, view.getTxtAlamatPelamar().getText());
+                    ps.setString(3, view.getTxtEmailPelamar().getText());
+                    ps.setString(4, view.getTxtNohpPelamar().getText());
+                    ps.setInt(6, Integer.parseInt(view.getTxtIdPelamar().getText()));
+
+                    ps.executeUpdate();
+
+                    show_pelamarlist_in_table();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Please fill in all of the fields");
+            }
+        } else if (source == view.getBtnDeletePelamar()){
+            if (checkIdInputPelamar()) {
+                try {
+                    Connection con = db.getConnection();
+                    String DeleteQuery = "DELETE FROM Pelamar where id = ?";
+                    PreparedStatement ps = null;
+                    ps = con.prepareStatement(DeleteQuery);
+
+                    ps.setInt(1, Integer.parseInt(view.getTxtIdPelamar().getText()));
+                    ps.executeUpdate();
+
+                    show_pelamarlist_in_table();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Pelamar id: " + view.getTxtIdPelamar().getText() + " not deleted");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Please input the Pelamar id");
+            }
+        }
     }
     
 }
