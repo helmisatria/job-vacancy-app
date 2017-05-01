@@ -13,16 +13,22 @@ public class Pelamar extends Orang {
     private String email;
     private String no_hp;
     private Berkas_Lamaran berkas;
+    private String perusahaan;
 
-    public Pelamar(String nama) {
-        super(nama);
-    }
-//    
-    public Pelamar(String nama, String alamat, String email, String no_hp) {
+    public Pelamar(String nama, String alamat, String email, String no_hp, String perusahaan) {
         super(nama);
         this.alamat=alamat;
         this.email=email;
         this.no_hp=no_hp; 
+        this.perusahaan = perusahaan;
+    }
+//    
+    public Pelamar(String id, String nama, String alamat, String email, String no_hp, String perusahaan) {
+        super(id, nama);
+        this.alamat=alamat;
+        this.email=email;
+        this.no_hp=no_hp; 
+        this.perusahaan = perusahaan;
     }
 
    public void createBerkas(Pelamar pelamar, Perusahaan p, String bagian){
@@ -57,8 +63,11 @@ public class Pelamar extends Orang {
     public String getNo_hp(){
         return no_hp;
     }
-     public String getEmail(){
+    public String getEmail(){
         return email;
+    }
+    public String getPerusahaan(){
+        return perusahaan;
     }
 }
 //    void createBerkas(Pelamar pelamar1, Perusahaan p1, String developer) {

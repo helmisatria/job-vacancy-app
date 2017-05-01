@@ -9,14 +9,13 @@ import java.util.*;
  * @author KNF
  */
 public class Lowongan {
-   private String nama;
+    private String id;
+    private String nama;
     private ArrayList<Berkas_Lamaran> berkasMasuk = new ArrayList<>();
     private ArrayList<Berkas_Lamaran> berkasDiterima = new ArrayList<>();
-    private static int id=1;
     
     public Lowongan(String nama){
         this.nama=nama;
-        id++;
     }
     
     public void addBerkas(Berkas_Lamaran berkas){
@@ -28,7 +27,7 @@ public class Lowongan {
     public String getNama(){
         return nama;
     }
-    public static int getId(){
+    public String getId(){
         return id;
     }
     public ArrayList<Berkas_Lamaran> getBerkasMasuk(){

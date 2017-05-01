@@ -9,14 +9,14 @@ import java.util.ArrayList;
  * @author KNF
  */
 public class Perusahaan extends Orang{
-        
+    
     private String lokasi;
     private static int jmlPelamar;
     private static int jmlLowongan;
     private ArrayList<Lowongan> daftarLowongan = new ArrayList<>();     
 
-    public Perusahaan(String lokasi, String nama) {
-        super(nama);
+    public Perusahaan(String id, String lokasi, String nama) {
+        super(id, nama);
         this.lokasi = lokasi;
         daftarLowongan = new ArrayList<>(); 
     }

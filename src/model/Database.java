@@ -7,6 +7,9 @@ package model;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,14 +22,16 @@ public class Database {
     private Statement statement = null;
     private Connection connection = null;
     
-    public void connect() {
-        try{
-            connection = DriverManager.getConnection(server, dbuser, dbpasswd);
-            statement = connection.createStatement();
-        } catch (Exception e){
-            throw new IllegalArgumentException("Terjadi kesalahan saat connect to database");
-        }
+    public Connection getConnection(){
+        Connection con = null;
+            try {
+                con = DriverManager.getConnection(server, dbuser, dbpasswd);
+//                JOptionPane.showMessageDialog(null, "Connected!");
+                return con;
+            } catch (SQLException ex) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+//                JOptionPane.showMessageDialog(null, "Not connected");
+                return null;
+            }
+        } 
     }
-    
-    
-}

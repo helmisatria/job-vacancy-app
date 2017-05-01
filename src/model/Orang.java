@@ -9,17 +9,21 @@ package model;
  * @author KNF
  */
 public abstract class Orang {
-    private static int id;
-    private  String nama;
+    private int id;
+    private String nama;
     
+    public Orang(String id, String nama){
+        this.nama=nama;
+        this.id = Integer.parseInt(id);
+    }
     public Orang(String nama){
         this.nama=nama;
-        id++;
     }
+    
     public String getNama(){
         return nama;
     }
-    public static int getId(){
+    public int getId(){
         return id;
     }
     
