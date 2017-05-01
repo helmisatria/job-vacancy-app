@@ -10,31 +10,28 @@ import java.util.*;
  */
 public class Lowongan {
     private String id;
+    private String idPerusahaan;
     private String nama;
-    private ArrayList<Berkas_Lamaran> berkasMasuk = new ArrayList<>();
-    private ArrayList<Berkas_Lamaran> berkasDiterima = new ArrayList<>();
+    private int jumlahLowongan;
     
-    public Lowongan(String nama){
+    public Lowongan(String id, String nama, int jumlahLowongan, String idPerusahaan){
+        this.id = id;
         this.nama=nama;
+        this.jumlahLowongan = jumlahLowongan;
+        this.idPerusahaan = idPerusahaan;
     }
     
-    public void addBerkas(Berkas_Lamaran berkas){
-        berkasMasuk.add(berkas);
-    }
-    public void terimaBerkas (Berkas_Lamaran berkas){
-        berkasDiterima.add(berkas);
-    }
     public String getNama(){
         return nama;
     }
     public String getId(){
         return id;
     }
-    public ArrayList<Berkas_Lamaran> getBerkasMasuk(){
-        return berkasMasuk;
+    public int getJumlahLowongan(){
+        return jumlahLowongan;
     }
-    public ArrayList<Berkas_Lamaran> getBerkasDiterima(){
-        return berkasDiterima;
+        public String getIdPerusahaan(){
+        return idPerusahaan;
     }
     
 }

@@ -12,39 +12,14 @@ public class Pelamar extends Orang {
     private String alamat;
     private String email;
     private String no_hp;
-    private Berkas_Lamaran berkas;
-    private String perusahaan;
-
-    public Pelamar(String nama, String alamat, String email, String no_hp, String perusahaan) {
-        super(nama);
-        this.alamat=alamat;
-        this.email=email;
-        this.no_hp=no_hp; 
-        this.perusahaan = perusahaan;
-    }
 //    
-    public Pelamar(String id, String nama, String alamat, String email, String no_hp, String perusahaan) {
+    public Pelamar(String id, String nama, String alamat, String email, String no_hp) {
         super(id, nama);
         this.alamat=alamat;
         this.email=email;
-        this.no_hp=no_hp; 
-        this.perusahaan = perusahaan;
+        this.no_hp=no_hp;
     }
-
-   public void createBerkas(Pelamar pelamar, Perusahaan p, String bagian){
-       int found=p.find(p.getDaftarLowongan(),bagian);
-       
-       if (found==-1){
-           System.out.println(bagian +" Not Found!");
-           
-       }else{
-           berkas=new Berkas_Lamaran(pelamar, p, bagian);
-           p.getDaftarLowongan().get(0).addBerkas(berkas);
-       }
-   }
-    public void setBerkas(Berkas_Lamaran berkas){
-        this.berkas=berkas;
-    }
+   
     public void setAlamat(String alamat){
         this.alamat=alamat;
     }
@@ -54,9 +29,6 @@ public class Pelamar extends Orang {
     public void setEmail(String email){
         this.email=email;
     }
-    public Berkas_Lamaran getBerkas(){
-        return berkas;
-    }
     public String getAlamat(){
         return alamat;
     }
@@ -65,9 +37,6 @@ public class Pelamar extends Orang {
     }
     public String getEmail(){
         return email;
-    }
-    public String getPerusahaan(){
-        return perusahaan;
     }
 }
 //    void createBerkas(Pelamar pelamar1, Perusahaan p1, String developer) {

@@ -9,33 +9,26 @@ package model;
  * @author KNF
  */
 public class Berkas_Lamaran {
-    private Perusahaan perusahaan_dituju;
+    private String idPerusahaan;
     private String bagian;
-    private Pelamar pelamar;
+    private String idPelamar;
     
-    public Berkas_Lamaran(Pelamar pelamar, Perusahaan p, String bagian){
-        this.pelamar=pelamar;
-        perusahaan_dituju = p;
+    public Berkas_Lamaran(String idPelamar, String bagian, String idPerusahaan){
+        this.idPelamar = idPelamar;
+        this.idPerusahaan = idPerusahaan;
         this.bagian= bagian;
     }
-    
-    public Perusahaan getPerusahaan_dituju(){
-        return perusahaan_dituju;
+
+    public String getIdPerusahaan() {
+        return idPerusahaan;
     }
-    public void setPerusahaan_dituju(Perusahaan perusahaan_dituju){
-        this.perusahaan_dituju=perusahaan_dituju;
-    }
-    public void setBagian(String bagian){
-        this.bagian=bagian;
-    }
-    public void setPelamar(Pelamar pelamar){
-        this.pelamar=pelamar;
-    }
-    public String getBagian(){
+
+    public String getBagian() {
         return bagian;
     }
-    public Pelamar getPelamar(){
-        return pelamar;
+
+    public String getIdPelamar() {
+        return idPelamar;
     }
     
 }

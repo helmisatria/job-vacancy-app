@@ -32,6 +32,8 @@ public class View extends javax.swing.JFrame {
 //        db.connect();
         show_pelamarlist_in_table();
         show_perusahaanlist_in_table();
+        show_pelamarlist_in_berkas();
+        show_perusahaanlist_in_lowongan();
     }
     
     /**
@@ -46,7 +48,7 @@ public class View extends javax.swing.JFrame {
         jScrollBar2 = new javax.swing.JScrollBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        pnlRegisterPerusahaan = new javax.swing.JTabbedPane();
+        pnlRegisterBerkas = new javax.swing.JTabbedPane();
         plRegistrasiPelamar = new javax.swing.JPanel();
         txtNamaPelamar = new javax.swing.JTextField();
         txtEmailPelamar = new javax.swing.JTextField();
@@ -56,9 +58,7 @@ public class View extends javax.swing.JFrame {
         lbemail = new javax.swing.JLabel();
         lbAlamat = new javax.swing.JLabel();
         lbNo_hp = new javax.swing.JLabel();
-        lbPerusahaan_dituju = new javax.swing.JLabel();
         lbLogo = new javax.swing.JLabel();
-        txtPerusahaanPelamar = new javax.swing.JTextField();
         jScrollPane6 = new javax.swing.JScrollPane();
         tablePelamar = new javax.swing.JTable();
         btnInsertPelamar = new javax.swing.JButton();
@@ -66,14 +66,6 @@ public class View extends javax.swing.JFrame {
         lbName1 = new javax.swing.JLabel();
         txtIdPelamar = new javax.swing.JTextField();
         btnDeletePelamar = new javax.swing.JButton();
-        plDataPelamar = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtDetilPelamar = new javax.swing.JTextArea();
-        lbDetilPerlamar = new javax.swing.JLabel();
-        plDataPerusahaan = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        txtDetilPerusahaan = new javax.swing.JTextArea();
-        lbDetilPerusahaan = new javax.swing.JLabel();
         plRegistrsasiPerusahaan = new javax.swing.JPanel();
         lbLokasi = new javax.swing.JLabel();
         txtLokasiPerusahaan = new javax.swing.JTextField();
@@ -85,6 +77,29 @@ public class View extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         tablePerusahaan = new javax.swing.JTable();
         btnInsertPerusahaan = new javax.swing.JButton();
+        btnUpdatePerusahaan = new javax.swing.JButton();
+        btnDeletePerusahaan = new javax.swing.JButton();
+        plDataPelamar = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tablePelamarOnBerkas = new javax.swing.JTable();
+        plDataPerusahaan = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tablePerusahaanOnLowongan = new javax.swing.JTable();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        tableLowongan = new javax.swing.JTable();
+        lbNamaPerusahaan2 = new javax.swing.JLabel();
+        txtIdLowongan = new javax.swing.JTextField();
+        lbNamaPerusahaan3 = new javax.swing.JLabel();
+        txtNamaLowongan = new javax.swing.JTextField();
+        lbLokasi1 = new javax.swing.JLabel();
+        txtJumlahLowongan = new javax.swing.JTextField();
+        btnDeleteLowongan = new javax.swing.JButton();
+        btnUpdateLowongan = new javax.swing.JButton();
+        btnInsertLowongan = new javax.swing.JButton();
+        lbLokasi2 = new javax.swing.JLabel();
+        txtIdPerusahaanLowongan = new javax.swing.JTextField();
         btnExit = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -103,8 +118,13 @@ public class View extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOKER");
 
-        pnlRegisterPerusahaan.setBackground(new java.awt.Color(255, 255, 204));
-        pnlRegisterPerusahaan.setToolTipText("");
+        pnlRegisterBerkas.setBackground(new java.awt.Color(255, 255, 204));
+        pnlRegisterBerkas.setToolTipText("");
+        pnlRegisterBerkas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlRegisterBerkasMouseClicked(evt);
+            }
+        });
 
         plRegistrasiPelamar.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -116,8 +136,6 @@ public class View extends javax.swing.JFrame {
 
         lbNo_hp.setText("No_hp");
 
-        lbPerusahaan_dituju.setText("Nama Perusahaan");
-
         lbLogo.setBackground(new java.awt.Color(0, 153, 102));
         lbLogo.setText("Masukan Data Diri Anda Sebagai Pelamar");
 
@@ -126,15 +144,29 @@ public class View extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nama", "Alamat", "E-mail", "No HP", "Perusahaan"
+                "ID", "Nama", "Alamat", "E-mail", "No HP"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablePelamar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablePelamarMouseClicked(evt);
             }
         });
         jScrollPane6.setViewportView(tablePelamar);
+        if (tablePelamar.getColumnModel().getColumnCount() > 0) {
+            tablePelamar.getColumnModel().getColumn(0).setMaxWidth(40);
+            tablePelamar.getColumnModel().getColumn(2).setHeaderValue("Alamat");
+            tablePelamar.getColumnModel().getColumn(3).setHeaderValue("E-mail");
+            tablePelamar.getColumnModel().getColumn(4).setHeaderValue("No HP");
+        }
 
         btnInsertPelamar.setText("INSERT");
         btnInsertPelamar.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +201,7 @@ public class View extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addComponent(lbLogo))
                     .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
+                        .addGap(99, 99, 99)
                         .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
                                 .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -188,13 +220,9 @@ public class View extends javax.swing.JFrame {
                                             .addComponent(txtEmailPelamar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtNamaPelamar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
-                                .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbPerusahaan_dituju)
-                                    .addComponent(lbNo_hp, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addComponent(lbNo_hp)
                                 .addGap(39, 39, 39)
-                                .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNohpPelamar, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                                    .addComponent(txtPerusahaanPelamar)))
+                                .addComponent(txtNohpPelamar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
                                 .addComponent(btnDeletePelamar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -203,7 +231,7 @@ public class View extends javax.swing.JFrame {
                                 .addComponent(btnInsertPelamar)))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         plRegistrasiPelamarLayout.setVerticalGroup(
             plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,7 +240,7 @@ public class View extends javax.swing.JFrame {
                 .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                         .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtIdPelamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbName1))
@@ -232,11 +260,7 @@ public class View extends javax.swing.JFrame {
                         .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNohpPelamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbNo_hp))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbPerusahaan_dituju)
-                            .addComponent(txtPerusahaanPelamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(43, 43, 43)
                         .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnInsertPelamar)
                             .addComponent(btnUpdatePelamar)
@@ -244,74 +268,10 @@ public class View extends javax.swing.JFrame {
                     .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
-        pnlRegisterPerusahaan.addTab("Register Pelamar", plRegistrasiPelamar);
-
-        plDataPelamar.setBackground(new java.awt.Color(255, 255, 255));
-
-        txtDetilPelamar.setEditable(false);
-        txtDetilPelamar.setColumns(20);
-        txtDetilPelamar.setRows(5);
-        jScrollPane3.setViewportView(txtDetilPelamar);
-
-        lbDetilPerlamar.setText("Daftar Pelamar");
-
-        javax.swing.GroupLayout plDataPelamarLayout = new javax.swing.GroupLayout(plDataPelamar);
-        plDataPelamar.setLayout(plDataPelamarLayout);
-        plDataPelamarLayout.setHorizontalGroup(
-            plDataPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plDataPelamarLayout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(lbDetilPerlamar)
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(488, Short.MAX_VALUE))
-        );
-        plDataPelamarLayout.setVerticalGroup(
-            plDataPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(plDataPelamarLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(plDataPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDetilPerlamar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pnlRegisterPerusahaan.addTab("Data Pelamar", plDataPelamar);
-
-        plDataPerusahaan.setBackground(new java.awt.Color(255, 255, 255));
-
-        txtDetilPerusahaan.setEditable(false);
-        txtDetilPerusahaan.setColumns(20);
-        txtDetilPerusahaan.setRows(5);
-        jScrollPane4.setViewportView(txtDetilPerusahaan);
-
-        lbDetilPerusahaan.setText("Data Perusahaan");
-
-        javax.swing.GroupLayout plDataPerusahaanLayout = new javax.swing.GroupLayout(plDataPerusahaan);
-        plDataPerusahaan.setLayout(plDataPerusahaanLayout);
-        plDataPerusahaanLayout.setHorizontalGroup(
-            plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plDataPerusahaanLayout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(lbDetilPerusahaan)
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(477, Short.MAX_VALUE))
-        );
-        plDataPerusahaanLayout.setVerticalGroup(
-            plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(plDataPerusahaanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDetilPerusahaan))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pnlRegisterPerusahaan.addTab("Data Perusahaan", plDataPerusahaan);
+        pnlRegisterBerkas.addTab("Register Pelamar", plRegistrasiPelamar);
 
         plRegistrsasiPerusahaan.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -345,6 +305,20 @@ public class View extends javax.swing.JFrame {
             }
         });
 
+        btnUpdatePerusahaan.setText("UPDATE");
+        btnUpdatePerusahaan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdatePerusahaanActionPerformed(evt);
+            }
+        });
+
+        btnDeletePerusahaan.setText("DELETE");
+        btnDeletePerusahaan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletePerusahaanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout plRegistrsasiPerusahaanLayout = new javax.swing.GroupLayout(plRegistrsasiPerusahaan);
         plRegistrsasiPerusahaan.setLayout(plRegistrsasiPerusahaanLayout);
         plRegistrsasiPerusahaanLayout.setHorizontalGroup(
@@ -365,10 +339,15 @@ public class View extends javax.swing.JFrame {
                                     .addComponent(txtLokasiPerusahaan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNamaPerusahaan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtIdPerusahaan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnInsertPerusahaan))
+                            .addGroup(plRegistrsasiPerusahaanLayout.createSequentialGroup()
+                                .addComponent(btnDeletePerusahaan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnUpdatePerusahaan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnInsertPerusahaan)))
                         .addGap(77, 77, 77)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         plRegistrsasiPerusahaanLayout.setVerticalGroup(
             plRegistrsasiPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,12 +369,209 @@ public class View extends javax.swing.JFrame {
                             .addComponent(txtLokasiPerusahaan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbLokasi))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInsertPerusahaan))
+                        .addGroup(plRegistrsasiPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnInsertPerusahaan)
+                            .addComponent(btnUpdatePerusahaan)
+                            .addComponent(btnDeletePerusahaan)))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(201, 201, 201))
         );
 
-        pnlRegisterPerusahaan.addTab("Register Perusahaan", plRegistrsasiPerusahaan);
+        pnlRegisterBerkas.addTab("Register Perusahaan", plRegistrsasiPerusahaan);
+
+        plDataPelamar.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane7.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(0).setMaxWidth(40);
+        }
+
+        tablePelamarOnBerkas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nama"
+            }
+        ));
+        tablePelamarOnBerkas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePelamarOnBerkasMouseClicked(evt);
+            }
+        });
+        jScrollPane8.setViewportView(tablePelamarOnBerkas);
+        if (tablePelamarOnBerkas.getColumnModel().getColumnCount() > 0) {
+            tablePelamarOnBerkas.getColumnModel().getColumn(0).setMaxWidth(40);
+        }
+
+        javax.swing.GroupLayout plDataPelamarLayout = new javax.swing.GroupLayout(plDataPelamar);
+        plDataPelamar.setLayout(plDataPelamarLayout);
+        plDataPelamarLayout.setHorizontalGroup(
+            plDataPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(plDataPelamarLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 239, Short.MAX_VALUE))
+        );
+        plDataPelamarLayout.setVerticalGroup(
+            plDataPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(plDataPelamarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(plDataPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        pnlRegisterBerkas.addTab("Data Berkas Pelamar", plDataPelamar);
+
+        plDataPerusahaan.setBackground(new java.awt.Color(255, 255, 255));
+
+        tablePerusahaanOnLowongan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nama Perusahaan"
+            }
+        ));
+        tablePerusahaanOnLowongan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePerusahaanOnLowonganMouseClicked(evt);
+            }
+        });
+        jScrollPane9.setViewportView(tablePerusahaanOnLowongan);
+        if (tablePerusahaanOnLowongan.getColumnModel().getColumnCount() > 0) {
+            tablePerusahaanOnLowongan.getColumnModel().getColumn(0).setMaxWidth(40);
+        }
+
+        tableLowongan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Bagian", "Jumlah Lowongan", "ID Perusahaan"
+            }
+        ));
+        tableLowongan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableLowonganMouseClicked(evt);
+            }
+        });
+        jScrollPane10.setViewportView(tableLowongan);
+        if (tableLowongan.getColumnModel().getColumnCount() > 0) {
+            tableLowongan.getColumnModel().getColumn(0).setMaxWidth(40);
+        }
+
+        lbNamaPerusahaan2.setText("ID Lowongan");
+
+        lbNamaPerusahaan3.setText("Nama Lowongan");
+
+        lbLokasi1.setText("Jumlah lowongan");
+
+        btnDeleteLowongan.setText("DELETE");
+        btnDeleteLowongan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteLowonganActionPerformed(evt);
+            }
+        });
+
+        btnUpdateLowongan.setText("UPDATE");
+        btnUpdateLowongan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateLowonganActionPerformed(evt);
+            }
+        });
+
+        btnInsertLowongan.setText("INSERT");
+        btnInsertLowongan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertLowonganActionPerformed(evt);
+            }
+        });
+
+        lbLokasi2.setText("ID Perusahaan");
+
+        javax.swing.GroupLayout plDataPerusahaanLayout = new javax.swing.GroupLayout(plDataPerusahaan);
+        plDataPerusahaan.setLayout(plDataPerusahaanLayout);
+        plDataPerusahaanLayout.setHorizontalGroup(
+            plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(plDataPerusahaanLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plDataPerusahaanLayout.createSequentialGroup()
+                        .addComponent(btnDeleteLowongan)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnUpdateLowongan)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnInsertLowongan))
+                    .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(plDataPerusahaanLayout.createSequentialGroup()
+                            .addComponent(lbLokasi2)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtIdPerusahaanLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(plDataPerusahaanLayout.createSequentialGroup()
+                            .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lbNamaPerusahaan3)
+                                .addComponent(lbLokasi1)
+                                .addComponent(lbNamaPerusahaan2))
+                            .addGap(18, 18, 18)
+                            .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtJumlahLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNamaLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtIdLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 64, Short.MAX_VALUE))
+        );
+        plDataPerusahaanLayout.setVerticalGroup(
+            plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(plDataPerusahaanLayout.createSequentialGroup()
+                .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plDataPerusahaanLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(plDataPerusahaanLayout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbLokasi1)
+                            .addGroup(plDataPerusahaanLayout.createSequentialGroup()
+                                .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtIdLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbNamaPerusahaan2))
+                                .addGap(18, 18, 18)
+                                .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtNamaLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbNamaPerusahaan3))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtJumlahLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtIdPerusahaanLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbLokasi2))
+                        .addGap(31, 31, 31)
+                        .addGroup(plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnInsertLowongan)
+                            .addComponent(btnUpdateLowongan)
+                            .addComponent(btnDeleteLowongan))))
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        pnlRegisterBerkas.addTab("Data Lowongan", plDataPerusahaan);
 
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -408,19 +584,19 @@ public class View extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnExit)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlRegisterPerusahaan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnExit, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlRegisterBerkas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlRegisterPerusahaan, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addComponent(pnlRegisterBerkas, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnExit)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -438,12 +614,11 @@ public class View extends javax.swing.JFrame {
         if (checkInputPelamar()){
             try {
                 Connection con = db.getConnection();
-                PreparedStatement ps = con.prepareStatement("INSERT INTO Pelamar(Nama, Alamat, Email, Nohp, Perusahaan) values (?,?,?,?,?)");
+                PreparedStatement ps = con.prepareStatement("INSERT INTO Pelamar(Nama, Alamat, Email, Nohp) values (?,?,?,?)");
                 ps.setString(1, txtNamaPelamar.getText());
                 ps.setString(2, txtAlamatPelamar.getText());
                 ps.setString(3, txtEmailPelamar.getText());
                 ps.setString(4, txtNohpPelamar.getText());
-                ps.setString(5, txtPerusahaanPelamar.getText());
                 ps.executeUpdate();
                 
                 show_pelamarlist_in_table();
@@ -462,7 +637,7 @@ public class View extends javax.swing.JFrame {
             PreparedStatement ps = null;
             Connection con = db.getConnection();
             
-            UpdateQuery = "UPDATE pelamar SET nama = ?, alamat = ?, email = ?, nohp = ?, perusahaan = ? where id = ?";
+            UpdateQuery = "UPDATE pelamar SET nama = ?, alamat = ?, email = ?, nohp = ? where id = ?";
             try {
                 ps = con.prepareStatement(UpdateQuery);
                 
@@ -470,7 +645,6 @@ public class View extends javax.swing.JFrame {
                 ps.setString(2, txtAlamatPelamar.getText());
                 ps.setString(3, txtEmailPelamar.getText());
                 ps.setString(4, txtNohpPelamar.getText());
-                ps.setString(5, txtPerusahaanPelamar.getText());
                 ps.setInt(6, Integer.parseInt(txtIdPelamar.getText()));
                 
                 ps.executeUpdate();
@@ -536,6 +710,131 @@ public class View extends javax.swing.JFrame {
         showEachPerusahaan(index);
     }//GEN-LAST:event_tablePerusahaanMouseClicked
 
+    private void btnUpdatePerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePerusahaanActionPerformed
+        if (checkInputPerusahaan() && checkIdInputPerusahaan()){
+            String UpdateQuery = null;
+            PreparedStatement ps = null;
+            Connection con = db.getConnection();
+            
+            UpdateQuery = "UPDATE Perusahaan SET nama = ?, lokasi = ? where id = ?";
+            try {
+                ps = con.prepareStatement(UpdateQuery);
+                
+                ps.setString(1, txtNamaPerusahaan.getText());
+                ps.setString(2, txtLokasiPerusahaan.getText());
+                ps.setInt(3, Integer.parseInt(txtIdPerusahaan.getText()));
+                
+                ps.executeUpdate();
+                
+                show_perusahaanlist_in_table();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please fill in all of the fields");
+        }
+    }//GEN-LAST:event_btnUpdatePerusahaanActionPerformed
+
+    private void btnDeletePerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePerusahaanActionPerformed
+        if (checkIdInputPerusahaan()){
+            try {
+                Connection con = db.getConnection();
+                String DeleteQuery = "DELETE FROM Perusahaan where id = ?";
+                PreparedStatement ps = null;
+                ps = con.prepareStatement(DeleteQuery);
+                
+                ps.setInt(1, Integer.parseInt(txtIdPerusahaan.getText()));
+                ps.executeUpdate();
+                
+                show_perusahaanlist_in_table();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Perusahaan id: " + txtIdPerusahaan.getText() + " not deleted");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please input the Perusahaan id");
+        }
+    }//GEN-LAST:event_btnDeletePerusahaanActionPerformed
+
+    private void tablePelamarOnBerkasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePelamarOnBerkasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablePelamarOnBerkasMouseClicked
+
+    private void tablePerusahaanOnLowonganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePerusahaanOnLowonganMouseClicked
+        int index = tablePerusahaanOnLowongan.getSelectedRow();
+        Connection con = db.getConnection();
+        String query = "SELECT * FROM Perusahaan";
+//        PreparedStatement ps = con.prepareStatement(sql);
+        Statement st;
+        ResultSet rs;
+        try {
+            
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            Perusahaan perusahaan;
+            
+            for (int i = 0; i <= index; i++) {
+                rs.next();
+            }
+            perusahaan = new Perusahaan(rs.getString("id"), rs.getString("nama"), rs.getString("lokasi"));
+//            perusahaan = (Perusahaan) rs.getObject(index);
+            show_lowonganlist(perusahaan);
+        } catch (SQLException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+//        show_lowonganlist(index);
+    }//GEN-LAST:event_tablePerusahaanOnLowonganMouseClicked
+
+    private void pnlRegisterBerkasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlRegisterBerkasMouseClicked
+        // TODO add your handling code here:
+        show_perusahaanlist_in_lowongan();
+        show_perusahaanlist_in_table();
+        show_pelamarlist_in_berkas();
+        show_pelamarlist_in_table();
+    }//GEN-LAST:event_pnlRegisterBerkasMouseClicked
+
+    private void btnDeleteLowonganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteLowonganActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteLowonganActionPerformed
+
+    private void btnUpdateLowonganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateLowonganActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateLowonganActionPerformed
+
+    private void btnInsertLowonganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertLowonganActionPerformed
+        if (checkInputLowongan()){
+            try {
+                Connection con = db.getConnection();
+                PreparedStatement ps = con.prepareStatement("INSERT INTO Lowongan(Nama, jumlah_lowongan, idperusahaan) values (?,?,?)");
+                ps.setString(1, txtNamaLowongan.getText());
+                ps.setString(2, txtJumlahLowongan.getText());
+                ps.setString(3, txtIdPerusahaanLowongan.getText());
+                ps.executeUpdate();
+                
+                show_perusahaanlist_in_table();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Perusahaan tidak ditemukan!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "One or More fields are Empty!");
+        }
+    }//GEN-LAST:event_btnInsertLowonganActionPerformed
+
+    private void tableLowonganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableLowonganMouseClicked
+        // TODO add your handling code here:
+        int index = tableLowongan.getSelectedRow();
+        int row = tableLowongan.getRowCount();
+        int column = tableLowongan.getColumnCount();
+        ArrayList<Object> s = new ArrayList();
+        for (int i = 0; i  < column; i++) {
+                s.add(tableLowongan.getValueAt(index, i));
+        }
+        txtIdLowongan.setText(s.get(0).toString());
+        txtNamaLowongan.setText(s.get(1).toString());
+        txtJumlahLowongan.setText(s.get(2).toString());
+        txtIdPerusahaanLowongan.setText(s.get(3).toString());
+    }//GEN-LAST:event_tableLowonganMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -572,57 +871,69 @@ public class View extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeleteLowongan;
     private javax.swing.JButton btnDeletePelamar;
+    private javax.swing.JButton btnDeletePerusahaan;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnInsertLowongan;
     private javax.swing.JButton btnInsertPelamar;
     private javax.swing.JButton btnInsertPerusahaan;
+    private javax.swing.JButton btnUpdateLowongan;
     private javax.swing.JButton btnUpdatePelamar;
+    private javax.swing.JButton btnUpdatePerusahaan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollBar jScrollBar2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lbAlamat;
-    private javax.swing.JLabel lbDetilPerlamar;
-    private javax.swing.JLabel lbDetilPerusahaan;
     private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbLokasi;
+    private javax.swing.JLabel lbLokasi1;
+    private javax.swing.JLabel lbLokasi2;
     private javax.swing.JLabel lbNamaPerusahaan;
     private javax.swing.JLabel lbNamaPerusahaan1;
+    private javax.swing.JLabel lbNamaPerusahaan2;
+    private javax.swing.JLabel lbNamaPerusahaan3;
     private javax.swing.JLabel lbName;
     private javax.swing.JLabel lbName1;
     private javax.swing.JLabel lbNo_hp;
-    private javax.swing.JLabel lbPerusahaan_dituju;
     private javax.swing.JLabel lbemail;
     private javax.swing.JPanel plDataPelamar;
     private javax.swing.JPanel plDataPerusahaan;
     private javax.swing.JPanel plRegistrasiPelamar;
     private javax.swing.JPanel plRegistrsasiPerusahaan;
-    private javax.swing.JTabbedPane pnlRegisterPerusahaan;
+    private javax.swing.JTabbedPane pnlRegisterBerkas;
+    private javax.swing.JTable tableLowongan;
     private javax.swing.JTable tablePelamar;
+    private javax.swing.JTable tablePelamarOnBerkas;
     private javax.swing.JTable tablePerusahaan;
+    private javax.swing.JTable tablePerusahaanOnLowongan;
     private javax.swing.JTextField txtAlamatPelamar;
-    private javax.swing.JTextArea txtDetilPelamar;
-    private javax.swing.JTextArea txtDetilPerusahaan;
     private javax.swing.JTextField txtEmailPelamar;
+    private javax.swing.JTextField txtIdLowongan;
     private javax.swing.JTextField txtIdPelamar;
     private javax.swing.JTextField txtIdPerusahaan;
+    private javax.swing.JTextField txtIdPerusahaanLowongan;
+    private javax.swing.JTextField txtJumlahLowongan;
     private javax.swing.JTextField txtLokasiPerusahaan;
+    private javax.swing.JTextField txtNamaLowongan;
     private javax.swing.JTextField txtNamaPelamar;
     private javax.swing.JTextField txtNamaPerusahaan;
     private javax.swing.JTextField txtNohpPelamar;
-    private javax.swing.JTextField txtPerusahaanPelamar;
     // End of variables declaration//GEN-END:variables
 
     public boolean checkInputPelamar(){
         return !("".equals(txtNamaPelamar.getText())
                 || "".equals(txtAlamatPelamar.getText())
                 || "".equals(txtEmailPelamar.getText())
-                || "".equals(txtNohpPelamar.getText())
-                || "".equals(txtPerusahaanPelamar.getText()));
+                || "".equals(txtNohpPelamar.getText()));
     }
     
     public boolean checkIdInputPelamar(){
@@ -631,7 +942,7 @@ public class View extends javax.swing.JFrame {
     
     public ArrayList<Pelamar> getPelamarList(){
         
-            ArrayList<Pelamar> pelamarList = new ArrayList<Pelamar>();
+            ArrayList<Pelamar> pelamarList = new ArrayList<>();
             Connection con = db.getConnection();
             String query = "SELECT * from Pelamar";
 
@@ -644,7 +955,7 @@ public class View extends javax.swing.JFrame {
             Pelamar pelamar;
             
             while (rs.next()) {
-                pelamar = new Pelamar(rs.getString("id"), rs.getString("nama"), rs.getString("alamat"),rs.getString("email"), rs.getString("nohp"), rs.getString("perusahaan"));
+                pelamar = new Pelamar(rs.getString("id"), rs.getString("nama"), rs.getString("alamat"),rs.getString("email"), rs.getString("nohp"));
                 pelamarList.add(pelamar);
             }
             
@@ -661,14 +972,13 @@ public class View extends javax.swing.JFrame {
 //        CLEAR TABLE
         model.setRowCount(0);
         
-        Object[] row = new Object[6];
+        Object[] row = new Object[5];
         for (int i = 0; i < list.size(); i++) {
             row[0] = list.get(i).getId();
             row[1] = list.get(i).getNama();
             row[2] = list.get(i).getAlamat();
             row[3] = list.get(i).getEmail();
             row[4] = list.get(i).getNo_hp();
-            row[5] = list.get(i).getPerusahaan();
             
             model.addRow(row);
         }
@@ -680,11 +990,14 @@ public class View extends javax.swing.JFrame {
         txtAlamatPelamar.setText(getPelamarList().get(index).getAlamat());
         txtEmailPelamar.setText(getPelamarList().get(index).getEmail());
         txtNohpPelamar.setText(getPelamarList().get(index).getNo_hp());
-        txtPerusahaanPelamar.setText(getPelamarList().get(index).getPerusahaan());
     }
 
     private boolean checkInputPerusahaan() {
         return !("".equals(txtNamaPerusahaan.getText()) || "".equals(txtLokasiPerusahaan.getText()));
+    }
+    
+    public boolean checkIdInputPerusahaan(){
+        return !"".equals(txtIdPerusahaan.getText());
     }
     
     public ArrayList<Perusahaan> getPerusahaanList(){
@@ -713,20 +1026,7 @@ public class View extends javax.swing.JFrame {
     }
     
     public void show_perusahaanlist_in_table(){
-        ArrayList<Perusahaan> list = getPerusahaanList();
-        DefaultTableModel model = (DefaultTableModel) tablePerusahaan.getModel();
         
-//        CLEAR TABLE
-        model.setRowCount(0);
-        
-        Object[] row = new Object[3];
-        for (int i = 0; i < list.size(); i++) {
-            row[0] = list.get(i).getId();
-            row[1] = list.get(i).getNama();
-            row[2] = list.get(i).getLokasi();
-            
-            model.addRow(row);
-        }
     }
     
     public void showEachPerusahaan(int index){
@@ -734,4 +1034,90 @@ public class View extends javax.swing.JFrame {
         txtNamaPerusahaan.setText(getPerusahaanList().get(index).getNama());
         txtLokasiPerusahaan.setText(getPerusahaanList().get(index).getLokasi());
     }
+    
+    
+    public void show_pelamarlist_in_berkas(){
+        ArrayList<Pelamar> list = getPelamarList();
+        DefaultTableModel model = (DefaultTableModel) tablePelamarOnBerkas.getModel();
+        
+//        CLEAR TABLE
+        model.setRowCount(0);
+        
+        Object[] row = new Object[2];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getNama();
+            
+            model.addRow(row);
+        }
+    }
+    
+    
+//    ------------- END BERKAS ----------------------------
+    
+    public void show_perusahaanlist_in_lowongan(){
+        ArrayList<Perusahaan> list = getPerusahaanList();
+        DefaultTableModel model = (DefaultTableModel) tablePerusahaanOnLowongan.getModel();
+        
+//        CLEAR TABLE
+        model.setRowCount(0);
+        
+        Object[] row = new Object[2];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getNama();
+            
+            model.addRow(row);
+        }
+    }
+    public boolean checkInputLowongan(){
+        return !("".equals(txtNamaLowongan.getText()) || "".equals(txtJumlahLowongan.getText()) || "".equals(txtIdPerusahaanLowongan.getText()));
+    }
+    public boolean checkIdInputLowongan(){
+        return !"".equals(txtIdLowongan.getText());
+    }
+    
+    public void show_lowonganlist(Perusahaan perusahaan){
+        ArrayList<Lowongan> list = getLowonganList(perusahaan);
+        DefaultTableModel model = (DefaultTableModel) tableLowongan.getModel();
+        
+//        CLEAR TABLE
+        model.setRowCount(0);
+//        JOptionPane.showMessageDialog(null, list.size());
+        Object[] row = new Object[4];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getNama();
+            row[2] = list.get(i).getJumlahLowongan();
+            row[3] = list.get(i).getIdPerusahaan();
+            
+            model.addRow(row);
+        }
+    }
+    
+    public ArrayList<Lowongan> getLowonganList(Perusahaan perusahaan){
+//            ArrayList<Lowongan> lowonganList = new ArrayList<>();
+            ArrayList<Lowongan> lowonganList = perusahaan.getDaftarLowongan();
+            Connection con = db.getConnection();
+            String query = "SELECT * from Lowongan where idPerusahaan = "+perusahaan.getId();
+//            JOptionPane.showMessageDialog(null, query);
+            Statement st;
+            ResultSet rs;
+        try {
+            
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            Lowongan lowongan;
+            
+            while (rs.next()) {
+                lowongan = new Lowongan(rs.getString("id"), rs.getString("nama"), rs.getInt("jumlah_lowongan"), rs.getString("idperusahaan"));
+                lowonganList.add(lowongan);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lowonganList;
+    }
+    
 }
