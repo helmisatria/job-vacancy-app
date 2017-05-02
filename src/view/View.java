@@ -6,6 +6,7 @@ package view;
 
 import models.*;
 import controllers.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.logging.Level;
@@ -23,23 +24,20 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author KNF
  */
-public class View extends javax.swing.JFrame {
+public class View extends javax.swing.JFrame{
 
     /**
      * Creates new form AplicationGUIPelamar
      */
-    Database db;
-    PelamarController PelamarControl;
-    PerusahaanController PerusahaanControl;
-    LowonganController LowonganControl;
+    Database db = new Database();
+    Aplikasi app = new Aplikasi();
+//    PelamarController PelamarControl = new PelamarController();
+//    PerusahaanController PerusahaanControl;
+//    LowonganController LowonganControl;
 //    PelamarController clPelamar = new PelamarController();
 
     public View() {
         initComponents();
-//        PelamarControl.show_pelamarlist_in_table();
-//        show_perusahaanlist_in_table();
-//        PelamarControl.show_pelamarlist_in_berkas();
-//        show_perusahaanlist_in_lowongan();
     }
 
     /**
@@ -190,6 +188,8 @@ public class View extends javax.swing.JFrame {
 
         lbName1.setText("ID");
 
+        txtIdPelamar.setEditable(false);
+
         btnDeletePelamar.setText("DELETE");
         btnDeletePelamar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,18 +235,18 @@ public class View extends javax.swing.JFrame {
                                 .addComponent(btnUpdatePelamar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnInsertPelamar)))
-                        .addGap(18, 18, 18)
+                        .addGap(26, 26, 26)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         plRegistrasiPelamarLayout.setVerticalGroup(
             plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                         .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtIdPelamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbName1))
@@ -271,10 +271,8 @@ public class View extends javax.swing.JFrame {
                             .addComponent(btnInsertPelamar)
                             .addComponent(btnUpdatePelamar)
                             .addComponent(btnDeletePelamar)))
-                    .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pnlRegisterBerkas.addTab("Register Pelamar", plRegistrasiPelamar);
@@ -286,6 +284,8 @@ public class View extends javax.swing.JFrame {
         lbNamaPerusahaan.setText("Nama Perusahaan");
 
         jLabel1.setText("Pendaftaran Perusahaan");
+
+        txtIdPerusahaan.setEditable(false);
 
         lbNamaPerusahaan1.setText("ID");
 
@@ -351,9 +351,9 @@ public class View extends javax.swing.JFrame {
                                 .addComponent(btnUpdatePerusahaan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnInsertPerusahaan)))
-                        .addGap(77, 77, 77)
+                        .addGap(57, 57, 57)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         plRegistrsasiPerusahaanLayout.setVerticalGroup(
             plRegistrsasiPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,7 +427,7 @@ public class View extends javax.swing.JFrame {
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 239, Short.MAX_VALUE))
+                .addGap(0, 370, Short.MAX_VALUE))
         );
         plDataPelamarLayout.setVerticalGroup(
             plDataPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,6 +480,8 @@ public class View extends javax.swing.JFrame {
         }
 
         lbNamaPerusahaan2.setText("ID Lowongan");
+
+        txtIdLowongan.setEditable(false);
 
         lbNamaPerusahaan3.setText("Nama Lowongan");
 
@@ -540,7 +542,7 @@ public class View extends javax.swing.JFrame {
                                 .addComponent(txtJumlahLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtNamaLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtIdLowongan, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 64, Short.MAX_VALUE))
+                .addGap(0, 195, Short.MAX_VALUE))
         );
         plDataPerusahaanLayout.setVerticalGroup(
             plDataPerusahaanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -632,20 +634,34 @@ public class View extends javax.swing.JFrame {
     private void tablePelamarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePelamarMouseClicked
         // TODO add your handling code here:
         int index = tablePelamar.getSelectedRow();
-        PelamarControl.showEachPelamar(index);
+        int row = tablePelamar.getRowCount();
+        int column = tablePelamar.getColumnCount();
+        ArrayList<Object> s = new ArrayList();
+        for (int i = 0; i < column; i++) {
+            s.add(tablePelamar.getValueAt(index, i));
+        }
+        txtIdPelamar.setText(s.get(0).toString());
+        txtNamaPelamar.setText(s.get(1).toString());
+        txtEmailPelamar.setText(s.get(2).toString());
+        txtAlamatPelamar.setText(s.get(3).toString());
+        txtNohpPelamar.setText(s.get(4).toString());
     }//GEN-LAST:event_tablePelamarMouseClicked
-
-    
 
     private void btnInsertPerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertPerusahaanActionPerformed
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_btnInsertPerusahaanActionPerformed
 
     private void tablePerusahaanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePerusahaanMouseClicked
         // TODO add your handling code here:
         int index = tablePerusahaan.getSelectedRow();
-        PerusahaanControl.showEachPerusahaan(index);
+        int column = tablePerusahaan.getColumnCount();
+        ArrayList<Object> s = new ArrayList();
+        for (int i = 0; i < column; i++) {
+            s.add(tablePerusahaan.getValueAt(index, i));
+        }
+        txtIdPerusahaan.setText(s.get(0).toString());
+        txtNamaPerusahaan.setText(s.get(1).toString());
+        txtLokasiPerusahaan.setText(s.get(2).toString());
     }//GEN-LAST:event_tablePerusahaanMouseClicked
 
     private void btnUpdatePerusahaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePerusahaanActionPerformed
@@ -678,20 +694,16 @@ public class View extends javax.swing.JFrame {
             }
             perusahaan = new Perusahaan(rs.getString("id"), rs.getString("nama"), rs.getString("lokasi"));
 //            perusahaan = (Perusahaan) rs.getObject(index);
-            LowonganControl.show_lowonganlist(perusahaan);
+            show_lowonganlist(perusahaan);
         } catch (SQLException ex) {
             Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-//        show_lowonganlist(index);
     }//GEN-LAST:event_tablePerusahaanOnLowonganMouseClicked
 
     private void pnlRegisterBerkasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlRegisterBerkasMouseClicked
         // TODO add your handling code here:
-        PerusahaanControl.show_perusahaanlist_in_lowongan();
-        PerusahaanControl.show_perusahaanlist_in_table();
-        PelamarControl.show_pelamarlist_in_berkas();
-        PelamarControl.show_pelamarlist_in_table();
+//        PerusahaanControl.show_perusahaanlist_in_lowongan();
+//        PerusahaanControl.show_perusahaanlist_in_table();
     }//GEN-LAST:event_pnlRegisterBerkasMouseClicked
 
     private void btnDeleteLowonganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteLowonganActionPerformed
@@ -709,7 +721,6 @@ public class View extends javax.swing.JFrame {
     private void tableLowonganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableLowonganMouseClicked
         // TODO add your handling code here:
         int index = tableLowongan.getSelectedRow();
-        int row = tableLowongan.getRowCount();
         int column = tableLowongan.getColumnCount();
         ArrayList<Object> s = new ArrayList();
         for (int i = 0; i < column; i++) {
@@ -721,41 +732,6 @@ public class View extends javax.swing.JFrame {
         txtIdPerusahaanLowongan.setText(s.get(3).toString());
     }//GEN-LAST:event_tableLowonganMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new View().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeleteLowongan;
     private javax.swing.JButton btnDeletePelamar;
@@ -819,13 +795,14 @@ public class View extends javax.swing.JFrame {
 //    ---------------------------------------------------------
     
     public JTable getTableLowongan(){
-        return tableLowongan;
+        return this.tableLowongan;
     }
+    
     public JTable getTablePelamar(){
-        return tablePelamar;
+        return this.tablePelamar;
     }
     public JTable getTablePelamarOnBerkas(){
-        return tablePelamarOnBerkas;
+        return this.tablePelamarOnBerkas;
     }
     
     public JTable getTablePerusahaan() {
@@ -872,8 +849,8 @@ public class View extends javax.swing.JFrame {
         return btnDeletePerusahaan;
     }
 
-    public JTextField getTxtAlamatPelamar() {
-        return txtAlamatPelamar;
+    public String getTxtAlamatPelamar() {
+        return this.txtAlamatPelamar.getText();
     }
 
     public JTextField getTxtEmailPelamar() {
@@ -981,5 +958,127 @@ public class View extends javax.swing.JFrame {
       btnUpdatePelamar.addActionListener(a);
       btnUpdatePerusahaan.addActionListener(a);
     }
+    
+    public void show_pelamarlist_in_table(ArrayList<Pelamar> list){
+//        ArrayList<Pelamar> list = PelamarControl.getPelamarList();
+        DefaultTableModel model = (DefaultTableModel) tablePelamar.getModel();
+        
+//        CLEAR TABLE
+        model.setRowCount(0);
+        
+        Object[] row = new Object[5];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getNama();
+            row[2] = list.get(i).getAlamat();
+            row[3] = list.get(i).getEmail();
+            row[4] = list.get(i).getNo_hp();
+            
+            model.addRow(row);
+        }
+    }
+    
+    public void show_pelamarlist_in_berkas(ArrayList<Pelamar> list){
+//        ArrayList<Pelamar> list = PelamarControl.getPelamarList();
+        DefaultTableModel model = (DefaultTableModel) tablePelamarOnBerkas.getModel();
+        
+//        CLEAR TABLE
+        model.setRowCount(0);
+        
+        Object[] row = new Object[2];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getNama();
+            
+            model.addRow(row);
+        }
+    }
+    public void showEachPelamar(int index, ArrayList<Pelamar> list) {
+        
+        txtIdPelamar.setText(Integer.toString(list.get(index).getId()));
+        txtNamaPelamar.setText(list.get(index).getNama());
+        txtAlamatPelamar.setText(list.get(index).getAlamat());
+        txtEmailPelamar.setText(list.get(index).getEmail());
+        txtNohpPelamar.setText(list.get(index).getNo_hp());
+    }
+    public void show_perusahaanlist_in_table(ArrayList<Perusahaan> list) {
+        DefaultTableModel model = (DefaultTableModel) tablePerusahaan.getModel();
+        
+//        CLEAR TABLE
+        model.setRowCount(0);
+        
+        Object[] row = new Object[3];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getNama();
+            row[2] = list.get(i).getLokasi();
+            
+            model.addRow(row);
+        }
+    }
+
+    public void showEachPerusahaan(int index, ArrayList<Perusahaan> list) {
+        txtIdPerusahaan.setText(Integer.toString(list.get(index).getId()));
+        txtNamaPerusahaan.setText(list.get(index).getNama());
+        txtLokasiPerusahaan.setText(list.get(index).getLokasi());
+    }
+    public void show_perusahaanlist_in_lowongan() {
+        ArrayList<Perusahaan> list = app.getPerusahaanList();
+        DefaultTableModel model = (DefaultTableModel) tablePerusahaanOnLowongan.getModel();
+
+//        CLEAR TABLE
+        model.setRowCount(0);
+
+        Object[] row = new Object[2];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getNama();
+
+            model.addRow(row);
+        }
+    }
+    public ArrayList<Lowongan> getLowonganList(Perusahaan perusahaan) {
+//            ArrayList<Lowongan> lowonganList = new ArrayList<>();
+        ArrayList<Lowongan> lowonganList = perusahaan.getDaftarLowongan();
+        Connection con = db.getConnection();
+        String query = "SELECT * from Lowongan where idPerusahaan = " + perusahaan.getId();
+//            JOptionPane.showMessageDialog(null, query);
+        Statement st;
+        ResultSet rs;
+        try {
+
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            Lowongan lowongan;
+
+            while (rs.next()) {
+                lowongan = new Lowongan(rs.getString("id"), rs.getString("nama"), rs.getInt("jumlah_lowongan"), rs.getString("idperusahaan"));
+                lowonganList.add(lowongan);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lowonganList;
+    }
+    
+    public void show_lowonganlist(Perusahaan perusahaan) {
+        ArrayList<Lowongan> list = getLowonganList(perusahaan);
+        DefaultTableModel model = (DefaultTableModel) tableLowongan.getModel();
+
+//        CLEAR TABLE
+        model.setRowCount(0);
+//        JOptionPane.showMessageDialog(null, list.size());
+        Object[] row = new Object[4];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getNama();
+            row[2] = list.get(i).getJumlahLowongan();
+            row[3] = list.get(i).getIdPerusahaan();
+
+            model.addRow(row);
+        }
+    }
+    
     
 }

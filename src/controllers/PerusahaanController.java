@@ -62,9 +62,6 @@ public class PerusahaanController implements ActionListener{
         return perusahaanList;
     }
 
-    public void show_perusahaanlist_in_table() {
-    }
-
     public void showEachPerusahaan(int index) {
         view.setTxtIdPerusahaan(Integer.toString(getPerusahaanList().get(index).getId()));
         view.setTxtNamaPerusahaan(getPerusahaanList().get(index).getNama());
@@ -99,7 +96,7 @@ public class PerusahaanController implements ActionListener{
                     ps.setString(2, view.getTxtLokasiPerusahaan().getText());
                     ps.executeUpdate();
 
-                    show_perusahaanlist_in_table();
+//                    show_perusahaanlist_in_table();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
@@ -122,7 +119,7 @@ public class PerusahaanController implements ActionListener{
 
                     ps.executeUpdate();
 
-                    show_perusahaanlist_in_table();
+//                    show_perusahaanlist_in_table();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
@@ -140,7 +137,7 @@ public class PerusahaanController implements ActionListener{
                     ps.setInt(1, Integer.parseInt(view.getTxtIdPerusahaan().getText()));
                     ps.executeUpdate();
 
-                    show_perusahaanlist_in_table();
+//                    show_perusahaanlist_in_table();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Perusahaan id: " + view.getTxtIdPerusahaan().getText() + " not deleted");
                 }

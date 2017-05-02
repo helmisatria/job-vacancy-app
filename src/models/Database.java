@@ -24,14 +24,17 @@ public class Database {
     
     public Connection getConnection(){
         Connection con = null;
-            try {
-                con = DriverManager.getConnection(server, dbuser, dbpasswd);
+        try {
+            con = DriverManager.getConnection(server, dbuser, dbpasswd);
 //                JOptionPane.showMessageDialog(null, "Connected!");
-                return con;
-            } catch (SQLException ex) {
-                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return con;
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 //                JOptionPane.showMessageDialog(null, "Not connected");
-                return null;
-            }
-        } 
+            return null;
+        }
     }
+    
+    
+}
+

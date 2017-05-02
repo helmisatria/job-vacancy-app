@@ -96,7 +96,7 @@ public class LowonganController implements ActionListener{
                     ps.setString(3, view.getTxtIdPerusahaanLowongan().getText());
                     ps.executeUpdate();
 
-                    perusahaanControl.show_perusahaanlist_in_table();
+//                    show_perusahaanlist_in_table();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Perusahaan tidak ditemukan!");
                 }
