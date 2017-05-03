@@ -161,7 +161,27 @@ public class Handler implements ActionListener{
     public boolean checkIdInputPerusahaan() {
         return !"".equals(view.getTxtIdPerusahaan().getText());
     }
-
+    
+    public Perusahaan getPerusahaan(String id){
+        
+        Perusahaan p = null;
+        Connection con = db.getConnection();
+        String query = "SELECT * from Perusahaan where id="+id;
+        Statement st;
+        ResultSet rs;
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            
+            while(rs.next()){
+                p = new Perusahaan(rs.getString("id"), rs.getString("nama"), rs.getString("lokasi"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+         return p;
+    }
+    
     public ArrayList<Perusahaan> getPerusahaanList() {
 
         ArrayList<Perusahaan> perusahaanList = new ArrayList<>();
@@ -196,6 +216,7 @@ public class Handler implements ActionListener{
                 ps.executeUpdate();
 
                 view.show_perusahaanlist_in_table(getPerusahaanList());
+                view.show_perusahaanlist_in_lowongan();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
@@ -266,19 +287,61 @@ public class Handler implements ActionListener{
                 ps.setString(1, view.getTxtNamaLowongan().getText());
                 ps.setString(2, view.getTxtJumlahLowongan().getText());
                 ps.setString(3, view.getTxtIdPerusahaanLowongan().getText());
+                System.out.println(ps);
                 ps.executeUpdate();
-                
-                String p1 = view.getTxtNamaLowongan().getText();
-                String p2 = view.getTxtJumlahLowongan().getText();
-                String p3 = view.getTxtIdPerusahaanLowongan().getText();
-                
-                Perusahaan p = new Perusahaan(p1, p2, p3);
+                Perusahaan p = getPerusahaan(view.getTxtIdPerusahaanLowongan().getText());
                 view.show_lowonganlist(p);
+                
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Perusahaan tidak ditemukan!");
             }
         } else {
             JOptionPane.showMessageDialog(null, "One or More fields are Empty!");
+        }
+    }
+    private void updateLowongan() {
+        if (checkInputLowongan()&& checkIdInputLowongan()) {
+            String UpdateQuery = null;
+            PreparedStatement ps = null;
+            Connection con = db.getConnection();
+
+            UpdateQuery = "UPDATE Lowongan SET nama = ?, jumlah_lowongan = ?, idperusahaan = ? where id = ?";
+            try {
+                ps = con.prepareStatement(UpdateQuery);
+
+                ps.setString(1, view.getTxtNamaLowongan().getText());
+                ps.setString(2, view.getTxtJumlahLowongan().getText());
+                ps.setString(3, view.getTxtIdPerusahaanLowongan().getText());
+                ps.setInt(4, Integer.parseInt(view.getTxtIdLowongan().getText()));
+
+                ps.executeUpdate();
+
+                view.show_perusahaanlist_in_table(getPerusahaanList());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please fill in all of the fields");
+        }
+    }
+
+    private void deleteLowongan() {
+         if (checkIdInputLowongan()) {
+            try {
+                Connection con = db.getConnection();
+                String DeleteQuery = "DELETE FROM Lowongan where id = ?";
+                PreparedStatement ps = null;
+                ps = con.prepareStatement(DeleteQuery);
+
+                ps.setInt(1, Integer.parseInt(view.getTxtIdLowongan().getText()));
+                ps.executeUpdate();
+                
+                view.show_perusahaanlist_in_lowongan();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Lowongan id: " + view.getTxtIdLowongan().getText() + " not deleted");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select the Lowongan row");
         }
     }
 //    ------------------------ END LOWONGAN ---------------------------------
@@ -305,7 +368,11 @@ public class Handler implements ActionListener{
             deletePerusahaan();
         } else if (source.equals(view.getBtnInsertLowongan())){
             insertLowongan();
-        }
+        } else if (source.equals(view.getBtnUpdateLowongan())){
+            updateLowongan();
+        } else if (source.equals(view.getBtnDeleteLowongan())){
+            deleteLowongan();
+        } 
     }
 
     

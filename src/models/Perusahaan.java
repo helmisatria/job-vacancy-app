@@ -11,8 +11,6 @@ import java.util.ArrayList;
 public class Perusahaan extends Orang{
     
     private String lokasi;
-    private static int jmlPelamar;
-    private Lowongan lowongan;
     private ArrayList<Lowongan> daftarLowongan = new ArrayList<>();     
 
     public Perusahaan(String id, String nama, String lokasi) {

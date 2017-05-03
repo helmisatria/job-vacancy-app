@@ -165,12 +165,10 @@ public class View extends javax.swing.JFrame{
             }
         });
         jScrollPane6.setViewportView(tablePelamar);
-        if (tablePelamar.getColumnModel().getColumnCount() > 0) {
-            tablePelamar.getColumnModel().getColumn(0).setMaxWidth(40);
-            tablePelamar.getColumnModel().getColumn(2).setHeaderValue("Alamat");
-            tablePelamar.getColumnModel().getColumn(3).setHeaderValue("E-mail");
-            tablePelamar.getColumnModel().getColumn(4).setHeaderValue("No HP");
-        }
+        tablePelamar.getColumnModel().getColumn(0).setMaxWidth(40);
+        tablePelamar.getColumnModel().getColumn(2).setHeaderValue("Alamat");
+        tablePelamar.getColumnModel().getColumn(3).setHeaderValue("E-mail");
+        tablePelamar.getColumnModel().getColumn(4).setHeaderValue("No HP");
 
         btnInsertPelamar.setText("INSERT");
         btnInsertPelamar.addActionListener(new java.awt.event.ActionListener() {
@@ -244,7 +242,7 @@ public class View extends javax.swing.JFrame{
             .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                 .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plRegistrasiPelamarLayout.createSequentialGroup()
                         .addGroup(plRegistrasiPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -272,7 +270,7 @@ public class View extends javax.swing.JFrame{
                             .addComponent(btnUpdatePelamar)
                             .addComponent(btnDeletePelamar)))
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         pnlRegisterBerkas.addTab("Register Pelamar", plRegistrasiPelamar);
@@ -296,7 +294,15 @@ public class View extends javax.swing.JFrame{
             new String [] {
                 "ID Perusahaan", "Nama", "Lokasi"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablePerusahaan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablePerusahaanMouseClicked(evt);
@@ -394,11 +400,17 @@ public class View extends javax.swing.JFrame{
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane7.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setMaxWidth(40);
-        }
+        jTable3.getColumnModel().getColumn(0).setMaxWidth(40);
 
         tablePelamarOnBerkas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -407,16 +419,22 @@ public class View extends javax.swing.JFrame{
             new String [] {
                 "ID", "Nama"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablePelamarOnBerkas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablePelamarOnBerkasMouseClicked(evt);
             }
         });
         jScrollPane8.setViewportView(tablePelamarOnBerkas);
-        if (tablePelamarOnBerkas.getColumnModel().getColumnCount() > 0) {
-            tablePelamarOnBerkas.getColumnModel().getColumn(0).setMaxWidth(40);
-        }
+        tablePelamarOnBerkas.getColumnModel().getColumn(0).setMaxWidth(40);
 
         javax.swing.GroupLayout plDataPelamarLayout = new javax.swing.GroupLayout(plDataPelamar);
         plDataPelamar.setLayout(plDataPelamarLayout);
@@ -436,7 +454,7 @@ public class View extends javax.swing.JFrame{
                 .addGroup(plDataPelamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         pnlRegisterBerkas.addTab("Data Berkas Pelamar", plDataPelamar);
@@ -450,16 +468,22 @@ public class View extends javax.swing.JFrame{
             new String [] {
                 "ID", "Nama Perusahaan"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablePerusahaanOnLowongan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablePerusahaanOnLowonganMouseClicked(evt);
             }
         });
         jScrollPane9.setViewportView(tablePerusahaanOnLowongan);
-        if (tablePerusahaanOnLowongan.getColumnModel().getColumnCount() > 0) {
-            tablePerusahaanOnLowongan.getColumnModel().getColumn(0).setMaxWidth(40);
-        }
+        tablePerusahaanOnLowongan.getColumnModel().getColumn(0).setMaxWidth(40);
 
         tableLowongan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -468,16 +492,22 @@ public class View extends javax.swing.JFrame{
             new String [] {
                 "ID", "Bagian", "Jumlah Lowongan", "ID Perusahaan"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableLowongan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableLowonganMouseClicked(evt);
             }
         });
         jScrollPane10.setViewportView(tableLowongan);
-        if (tableLowongan.getColumnModel().getColumnCount() > 0) {
-            tableLowongan.getColumnModel().getColumn(0).setMaxWidth(40);
-        }
+        tableLowongan.getColumnModel().getColumn(0).setMaxWidth(40);
 
         lbNamaPerusahaan2.setText("ID Lowongan");
 
@@ -576,7 +606,7 @@ public class View extends javax.swing.JFrame{
                             .addComponent(btnInsertLowongan)
                             .addComponent(btnUpdateLowongan)
                             .addComponent(btnDeleteLowongan))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         pnlRegisterBerkas.addTab("Data Lowongan", plDataPerusahaan);
